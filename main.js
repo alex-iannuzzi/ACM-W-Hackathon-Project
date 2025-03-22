@@ -32,6 +32,7 @@ function animate() {
 	renderer.render( scene, camera );
 }
 
+const player = createPlayer();
 function createPlayer(){
     const player = {
         x: 0,
