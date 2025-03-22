@@ -10,7 +10,7 @@ const renderer = new THREE.WebGLRenderer();
 renderer.setSize( window.innerWidth, window.innerHeight );
 document.body.appendChild( renderer.domElement );
 
-//Basic olor Definitions
+//Basic color Definitions
 const blue = new THREE.Color().setRGB(0, 0, 1);
 const red = new THREE.Color().setRGB(1, 0, 0);
 const green = new THREE.Color().setRGB(0, 1, 0);
@@ -46,6 +46,7 @@ camera.position.y = 2;
 
 //Animation loop
 renderer.setAnimationLoop( animate );
+
 
 //EVENT LISTENERS
 //Increase player speed in given direction when a key is pressed (W,A,S,D movement controls)
