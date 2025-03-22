@@ -37,7 +37,7 @@ var player = createPlayer();
 scene.add(player.body);
 
 //Adding walls
-const wall1 = createWall(5, 1, 0);
+const wall1 = createWall(5, 0, 0);
 scene.add(wall1);
 
 //Setting camera position
@@ -62,26 +62,31 @@ function restart() {
 }
 
 //EVENT LISTENERS
+//Increase player speed in given direction when a key is pressed (W,A,S,D movement controls)
 //TODO: Add collision detection, compare speed to total speed, not each direction
 document.addEventListener('keypress', function(event) {
 	switch(event.key) {
 		case "w":
+			detectCollision(player);
 			if (player.velocity.z < player.speed && player.velocity.z > -player.speed) {
 				player.velocity.z -= 0.1;
 			}
 			break;
 		case "s":
+			detectCollision(player);
 			if (player.velocity.z < player.speed && player.velocity.z > -player.speed) {
 				player.velocity.z += 0.1;
 			}
 			player.velocity.z += 0.1;
 			break;
 		case "a":
+			detectCollision(player);
 			if (player.velocity.x < player.speed && player.velocity.x > -player.speed) {
 				player.velocity.x -= 0.1;
 			}
 			break;
 		case "d":
+			detectCollision(player);
 			if (player.velocity.x < player.speed && player.velocity.x > -player.speed) {
 				player.velocity.x += 0.1;
 			}
@@ -91,6 +96,7 @@ document.addEventListener('keypress', function(event) {
 	}
 });
 
+//Slow down and stop player when a key is released
 document.addEventListener('keyup', function(event) {
 	switch(event.key) {
 		case "w":
@@ -126,6 +132,27 @@ function animate() {
 	//player.body.position.y += Math.sin(time * 5) * 0.05;
 
 	renderer.render( scene, camera );
+}
+
+//Collision detection function
+//TODO: Add different collision detection for different objects, and actually make this work lol
+function detectCollision(player){
+	scene.children.forEach(function(object){
+		if (object != player.body){
+			//Detect collisions left and right, stop player from moving
+			if (player.body.position.x + player.radius > object.position.x - object.scale.x/2 &&
+			player.body.position.x - player.radius < object.position.x + object.scale.x/2) {
+				//Collision detected, stop player movement
+				player.velocity.x = 0;
+			
+			}
+			//Detect collisions up and down, stop player from moving
+			if (player.body.position.z + player.radius > object.position.z - object.scale.z/2 &&
+			player.body.position.z - player.radius < object.position.z + object.scale.z/2) {
+				player.velocity.z = 0;
+			}
+		}
+	});
 }
 
 function createPlayer(){
