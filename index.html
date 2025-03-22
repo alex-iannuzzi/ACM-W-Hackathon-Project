@@ -11,14 +11,17 @@
 			body { margin: 0; }
 		</style>
 	</head>
-
+		
 	<body>
+		
+		//Descriptive Subheadings
 		<script type="module" src="/main.js"></script>
 		<h1>Design Your Character</h1>
  		<input type="text" id = "username" placeholder="Enter username here :3" />
  		<h2>Choose A Color</h2>
+
+		//Qualities to customize avatar
  		<input type="color" id = "colorPicker">
- 
  		<button type="button" onclick="editPlayerColors()">Select A Color</button>
  		<script>
  			function editPlayerColors(){
@@ -26,6 +29,17 @@
  				const color = document.getElementById('colorPicker').value;
  				alert(`username: ${username}, Color: ${color}`);
  			}
+		//Menu features
+		<div class="menu-container">
+			<button class="menu-button">☰</button>
+			<div class="dropdown-menu">
+				<button onclick="Start()">START</button>
+				<button onclick="Pause()">PAUSE</button>
+				<button onclick="Resume()">RESUME</button>
+				<button onclick="Restart()">RESTART</button>
+			</div>
+		</div>
+
  		</script>
 	</body>
 </html>
