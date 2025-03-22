@@ -30,6 +30,7 @@ function createBody(character){
 
 function editPlayerColors(player, color){
     player.color = color;
+    
 }
 
 export {createPlayer, editPlayerColors};

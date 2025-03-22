@@ -20,4 +20,5 @@ editPlayerColors(player, "red");
 function animate() {
 	renderer.render( scene, camera );
 }
+
 renderer.setAnimationLoop( animate );
