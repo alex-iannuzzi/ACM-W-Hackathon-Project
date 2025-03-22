@@ -127,7 +127,7 @@ function detectCollision(player){
 		if (object != player.body){
 			//Detect collisions left and right, stop player from moving
 			if (player.body.position.x + player.radius > object.position.x - object.scale.x/2 &&
-			player.body.position.x - player.radius < object.position.x + object.scale.x/2) {{
+			player.body.position.x - player.radius < object.position.x + object.scale.x/2) {
 				//Collision detected, stop player movement
 				player.velocity.x = 0;
 			
