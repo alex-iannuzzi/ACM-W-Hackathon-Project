@@ -1,10 +1,12 @@
 h1 {
     color: palevioletred;
     font-family: Georgia;
+    text-align: center;
 }
 h2 {
     color: palevioletred;
     font-family: Georgia;
+    text-align: center;
 }
 
 button {
@@ -15,5 +17,6 @@ button {
     border: Brown;
     border-radius: 13px;
     font-family: Georgia;
+    text-align: center;
     
 }

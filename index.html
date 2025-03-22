@@ -33,16 +33,26 @@
 			.dropdown-menu button:hover {
 					background-color: #B0C4DE
 			}
+			.username {
+                    text-align: center
+            }
+            .design-avatar {
+                    text-align: center
+          }
 		</style>
 	</head>
 		
 	<body>
 		
-		<!-- Descriptive Subheadings -->
+		<!-- 		Descriptive Subheadings -->
 		<script type="module" src="/main.js"></script>
-		<h1>Design Your Character</h1>
+		<h1>Design Your Avatar</h1>
+      
+		<!-- Username Handle -->
+        <div class="username">
  		<input type="text" id = "username" placeholder="Enter username here :3" />
  		<h2>Choose A Color</h2>
+        </div>
 
 		<!-- Menu features -->
 		 <div class="menu-container">
@@ -55,9 +65,10 @@
 			</div>
 		</div>
 
-		<!-- Qualities to customize avatar -->
- 		<input type="color" id = "colorPicker">
- 		<button type="button" onclick="editPlayerColors()">Select A Color</button>
+		<div class="design-avatar">
+			<input type="color" id = "colorPicker">
+			<button type="button" onclick="editPlayerColors()">Select A Color</button>
+   		</div>
  		<script>
  			function editPlayerColors(){
  				const username = document.getElementById('username').value;
@@ -82,4 +93,3 @@
  		</script>
 	</body>
 </html>
-/
