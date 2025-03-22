@@ -47,19 +47,6 @@ camera.position.y = 2;
 //Animation loop
 renderer.setAnimationLoop( animate );
 
-//Drop-down Menu
-function start() {
-    alert("Game Started!");
-}
-function pause() {
-    alert("Game Paused!");
-}
-function resume() {
-    alert("Game Resumed!");
-}
-function restart() {
-    alert("Game Restarted!");
-}
 
 //EVENT LISTENERS
 //Increase player speed in given direction when a key is pressed (W,A,S,D movement controls)

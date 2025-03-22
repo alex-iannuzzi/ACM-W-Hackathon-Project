@@ -4,27 +4,49 @@
 <html lang="en">
 	<head>
 		<meta charset="utf-8">
-		<link rel="stylesheet" href="./styles.css" />
+		<link rel="stylesheet" type="text/css" href="./style.css" />
 		<title>ACM-W Game Dev Project</title>
-		<meta name="viewport" content="width=device-width , initial-scale=1.o" />
+		<meta name="viewport" content="width=device-width , initial-scale=1.0" />
 		<style>
 			body { margin: 0; }
+			.menu-container {
+				position: relative;
+				display: inline-block;
+			}
+			.dropdown-menu {
+				display: none;
+
+			}
+			.menu-container:hover .dropdown-menu{
+				display: block;
+			}
+			.dropdown-menu button {
+				display: block;
+			}
+			.dropdown-menu button: hover {
+
+			}
 		</style>
 	</head>
-<<<<<<< HEAD
 		
-=======
-
-	</head>
->>>>>>> 344033ea932670d86d6cc47dc3ad2181d2de8a4c
 	<body>
 		
 		//Descriptive Subheadings
 		<script type="module" src="/main.js"></script>
-<<<<<<< HEAD
 		<h1>Design Your Character</h1>
  		<input type="text" id = "username" placeholder="Enter username here :3" />
  		<h2>Choose A Color</h2>
+
+		//Menu features
+		 <div class="menu-container">
+			<button class="menu-button">☰</button>
+			<div class="dropdown-menu">
+				<button onclick="Start()">START</button>
+				<button onclick="Pause()">PAUSE</button>
+				<button onclick="Resume()">RESUME</button>
+				<button onclick="Restart()">RESTART</button>
+			</div>
+		</div>
 
 		//Qualities to customize avatar
  		<input type="color" id = "colorPicker">
@@ -35,73 +57,22 @@
  				const color = document.getElementById('colorPicker').value;
  				alert(`username: ${username}, Color: ${color}`);
  			}
-		//Menu features
-		<div class="menu-container">
-			<button class="menu-button">☰</button>
-			<div class="dropdown-menu">
-				<button onclick="Start()">START</button>
-				<button onclick="Pause()">PAUSE</button>
-				<button onclick="Resume()">RESUME</button>
-				<button onclick="Restart()">RESTART</button>
-			</div>
-		</div>
-
- 		</script>
-=======
-		<script type="module" src="/player.js"></script>
-		<h1>Design your character ! </h1>
-		<input type="text" id="username" placeholder="Enter username here :3" />
-		<input type="color" id = "colorPicker">
-		<button onclick = "IO_Username()"> </button>
-		<button onclick = "IO_Color()"> </button>
-		<p id="IO_Username"></p>
-		<p id="IO_Color"></p>
-
 		
-		//menu
-    <button onclick="pause()"> Pause Game</button>
-		<button onclick="continueGame()"> Continue Game</button>
-		<button onclick="exit()">Exit Game</button>
-
-		<script>
-			// 2 buttons that are used to input a username and choose a color with a color picker
-			//displays the buttons : username and color
-			//outputs the username onto screen with a hello msg
-			function displayUsername(){
-				const username = document.getElementById('username').value;
-				document.getElementById('username').textContent = `Hello, ${username}!`;
-			}
-
-			function displayColor(){
-				const color = document.getElementById('colorPicker').value;
-				alert(`Color: ${color}`);
-			}
-			
-
-			<h3> Main Menu </h3>
-			 
-				function start(){
-					alert("hello, ");
-					alert(`username: ${username}`);
-					
-				
-				}
-				function pause(){
-					alert("pause game?");
-
-				
-				}
-				function continueGame(){
-					alert("Let the games begin :o");
-				
-				}
-				function exit(){
-					alert("Exit game :'( ");
-				
-				}
-		</script>
-		</body>
-
->>>>>>> 344033ea932670d86d6cc47dc3ad2181d2de8a4c
+		//Drop-down Menu 
+		function start() {
+   			alert("Game Started!");
+		}
+		function pause() {
+    		alert("Game Paused!");
+		}
+		function resume() {
+    		alert("Game Resumed!");
+		}
+		function restart() {
+    		alert("Game Restarted!");
+		}	
+	
+ 		</script>
 	</body>
 </html>
+/
