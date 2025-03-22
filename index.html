@@ -8,10 +8,17 @@
 		<title>ACM-W Game Dev Project</title>
 		<meta name="viewport" content="width=device-width , initial-scale=1.0" />
 		<style>
+			/* Menu drop-down */
 			body { margin: 0; }
 			.menu-container {
-				position: relative;
+				position: fixed;
+				top: 10px;
+				right: 10px;
+				z-index: 1000;
 				display: inline-block;
+			}
+			.menu-button{
+				font-size: 18px;
 			}
 			.dropdown-menu {
 				display: none;
@@ -23,21 +30,21 @@
 			.dropdown-menu button {
 				display: block;
 			}
-			.dropdown-menu button: hover {
-
+			.dropdown-menu button:hover {
+					background-color: #B0C4DE
 			}
 		</style>
 	</head>
 		
 	<body>
 		
-		//Descriptive Subheadings
+		<!-- Descriptive Subheadings -->
 		<script type="module" src="/main.js"></script>
 		<h1>Design Your Character</h1>
  		<input type="text" id = "username" placeholder="Enter username here :3" />
  		<h2>Choose A Color</h2>
 
-		//Menu features
+		<!-- Menu features -->
 		 <div class="menu-container">
 			<button class="menu-button">☰</button>
 			<div class="dropdown-menu">
@@ -48,7 +55,7 @@
 			</div>
 		</div>
 
-		//Qualities to customize avatar
+		<!-- Qualities to customize avatar -->
  		<input type="color" id = "colorPicker">
  		<button type="button" onclick="editPlayerColors()">Select A Color</button>
  		<script>
@@ -58,7 +65,7 @@
  				alert(`username: ${username}, Color: ${color}`);
  			}
 		
-		//Drop-down Menu 
+		// Drop-down Menu 
 		function start() {
    			alert("Game Started!");
 		}
