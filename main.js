@@ -59,6 +59,7 @@ function createFloor(){
 	plane.rotation.x = -Math.PI / 2;
 	plane.position.x = 0;
 	plane.position.y = -1;
+	plane.receiveShadow = true;
 	return plane;
 }
 
