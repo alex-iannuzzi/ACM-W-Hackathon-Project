@@ -109,7 +109,7 @@ function animate() {
 	player.body.position.z += player.velocity.z;
 	
 	//Slight up and down bobbing motion of player
-	//player.body.position.y += 1 + Math.sin(time * 10) / 10;
+	//player.body.position.y += Math.sin(time * 5) * 0.05;
 
 	renderer.render( scene, camera );
 }
