@@ -9,6 +9,11 @@ const renderer = new THREE.WebGLRenderer();
 renderer.setSize( window.innerWidth, window.innerHeight );
 document.body.appendChild( renderer.domElement );
 
+//Adding light to the scene
+const light = new THREE.DirectionalLight( 0xffffff, 1 );
+light.position.set( 5, 5, 5 ).normalize();
+scene.add( light );
+
 //Testing cube
 const geometry = new THREE.BoxGeometry( 1, 1, 1 );
 const material = new THREE.MeshBasicMaterial( { color: 0x00ff00 } );
@@ -55,7 +60,7 @@ function createPlayer(){
 
 function createNewBody(radius, color, x, y, z){
     const geometry = new THREE.SphereGeometry(radius, 32, 32);
-    const material = new THREE.MeshStandardMaterial( { color: color} );
+    const material = new THREE.MeshStandardMaterial( { color: color } );
     const sphere = new THREE.Mesh( geometry, material );
     
     sphere.position.set(x, y, z);
