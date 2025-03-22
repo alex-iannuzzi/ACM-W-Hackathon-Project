@@ -1,7 +1,7 @@
 
 //Basic code for creating scene
 import * as THREE from 'three';
-import { velocity } from 'three/tsl';
+import { time, velocity } from 'three/tsl';
 
 const scene = new THREE.Scene();
 const camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 0.1, 1000 );
@@ -48,22 +48,53 @@ camera.position.y = 2;
 renderer.setAnimationLoop( animate );
 
 //EVENT LISTENERS
-//TODO: Create smooth movement by marking player as moving and altering position by velocity instead of discrete steps
+//TODO: Add collision detection, compare speed to total speed, not each direction
 document.addEventListener('keypress', function(event) {
 	switch(event.key) {
 		case "w":
 			if (player.velocity.z < player.speed && player.velocity.z > -player.speed) {
-				player.body.position.z -= 0.1;
+				player.velocity.z -= 0.1;
 			}
 			break;
 		case "s":
-			player.body.position.z += 0.1;
+			if (player.velocity.z < player.speed && player.velocity.z > -player.speed) {
+				player.velocity.z += 0.1;
+			}
+			player.velocity.z += 0.1;
 			break;
 		case "a":
-			player.body.position.x -= 0.1;
+			if (player.velocity.x < player.speed && player.velocity.x > -player.speed) {
+				player.velocity.x -= 0.1;
+			}
 			break;
 		case "d":
-			player.body.position.x += 0.1;
+			if (player.velocity.x < player.speed && player.velocity.x > -player.speed) {
+				player.velocity.x += 0.1;
+			}
+			break;
+		default:
+			break;
+	}
+});
+
+document.addEventListener('keyup', function(event) {
+	switch(event.key) {
+		case "w":
+			if (player.velocity.z < 0) {
+				player.velocity.z =0;
+			}
+			player.velocity.z = 0;
+			break;
+		case "s":
+			if (player.velocity.z > 0) {
+				player.velocity.z = 0;
+			}
+			break;
+		case "a":
+			player.velocity.x = 0;
+			break;
+		case "d":
+			player.velocity.x = 0;
 			break;
 		default:
 			break;
@@ -74,6 +105,12 @@ document.addEventListener('keypress', function(event) {
 
 //Function to animate the scene
 function animate() {
+	player.body.position.x += player.velocity.x;
+	player.body.position.z += player.velocity.z;
+	
+	//Slight up and down bobbing motion of player
+	//player.body.position.y += 1 + Math.sin(time * 10) / 10;
+
 	renderer.render( scene, camera );
 }
 
@@ -142,6 +179,19 @@ function createFloor(){
 function createWall(x, y, z){
 	const geometry = new THREE.BoxGeometry(1, 2, 10);
 	const material = new THREE.MeshBasicMaterial( { color: red } );
+	const cube = new THREE.Mesh( geometry, material );
+
+	cube.position.x = x;
+	cube.position.y = y;
+	cube.position.z = z;
+
+	return cube;
+	
+}
+
+function createItem(x, y, z){
+	const geometry = new THREE.BoxGeometry(0.5, 0.5, 0.5);
+	const material = new THREE.MeshBasicMaterial( { color: green } );
 	const cube = new THREE.Mesh( geometry, material );
 
 	cube.position.x = x;
