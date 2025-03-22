@@ -12,22 +12,60 @@
 		</style>
 	</head>
 
-	</h1>
+	</head>
 	<body>
 		<script type="module" src="/main.js"></script>
 		<script type="module" src="/player.js"></script>
 		<h1>Design your character ! </h1>
-		<input type="text" id = "username" placeholder="Enter username here :3"
-		<h2>Choose a Color</h2>
+		<input type="text" id="username" placeholder="Enter username here :3" />
 		<input type="color" id = "colorPicker">
+		<button onclick = "IO_Username()"> </button>
+		<button onclick = "IO_Color()"> </button>
+		<p id="IO_Username"></p>
+		<p id="IO_Color"></p>
 
-		<button onclick="editPlayerColors()">Choose your name</button>
+		
+		//menu
+    <button onclick="pause()"> Pause Game</button>
+		<button onclick="continueGame()"> Continue Game</button>
+		<button onclick="exit()">Exit Game</button>
+
 		<script>
-			function editPlayerColors(){
+			// 2 buttons that are used to input a username and choose a color with a color picker
+			//displays the buttons : username and color
+			//outputs the username onto screen with a hello msg
+			function displayUsername(){
 				const username = document.getElementById('username').value;
-				const color = document.getElementById('colorPicker').value;
-				alert(`username: ${username}, Color: ${color}`);
+				document.getElementById('username').textContent = `Hello, ${username}!`;
 			}
+
+			function displayColor(){
+				const color = document.getElementById('colorPicker').value;
+				alert(`Color: ${color}`);
+			}
+			
+
+			<h3> Main Menu </h3>
+			 
+				function start(){
+					alert("hello, ");
+					alert(`username: ${username}`);
+					
+				
+				}
+				function pause(){
+					alert("pause game?");
+
+				
+				}
+				function continueGame(){
+					alert("Let the games begin :o");
+				
+				}
+				function exit(){
+					alert("Exit game :'( ");
+				
+				}
 		</script>
 		</body>
 
