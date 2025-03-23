@@ -55,7 +55,7 @@ camera.position.y = 2;
 renderer.setAnimationLoop( animate );
 
 
-//EVENT LISTENERS
+//EVENT LISTENERS - reactions to keypresses, interactions with HTML elements, etc.
 //Increase player speed in given direction when a key is pressed (W,A,S,D movement controls)
 //TODO: Add collision detection, compare speed to total speed, not each direction
 document.addEventListener('keypress', function(event) {
@@ -115,6 +115,16 @@ document.addEventListener('keyup', function(event) {
 	}
 });
 
+//Change player color when selected from HTML element "colorPicker"
+document.getElementById("colorPicker").addEventListener("input", function(event) {
+	editPlayerColors(player, new THREE.Color(event.target.value));
+});
+
+//Change player username when entered into HTML element "username"
+document.getElementById("username").addEventListener("input", function(event) {
+	player.name = event.target.value;;
+});
+
 //FUNCTION DEFINITIONS
 
 
@@ -161,6 +171,7 @@ function detectCollision(player){
 	});
 }
 
+//Create player object
 function createPlayer(){
     var player = {
 		name: "Player1",
