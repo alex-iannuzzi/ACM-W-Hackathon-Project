@@ -28,6 +28,13 @@ const yellow = new THREE.Color().setRGB(1, 1, 0);
 const white = new THREE.Color().setRGB(1, 1, 1);
 const black = new THREE.Color().setRGB(0, 0, 0);
 
+//Object value definitions
+const seedEXP = 10;
+const seedKindness = 10;
+
+const shovelEXP = 10;
+const shovelDiligence = 10;
+
 //Describe background
 scene.background = new THREE.Color( 0xF591C3); //Pink background
 scene.fog = new THREE.Fog( 0xf9efde5, 10, 15); //Light orange fog
@@ -49,8 +56,11 @@ scene.add(player.body);
 
 
 //Adding walls
-const wall1 = createWall(5, 0, 0);
-scene.add(wall1);
+createRoom();
+
+//Adding items
+const seeds = createSeeds(1, 0, -2, green);
+scene.add(seeds);
 
 //Setting camera position
 camera.position.z = 5;
@@ -148,9 +158,15 @@ document.getElementById("restart-button").addEventListener("click", function(eve
 
 //Function to animate the scene
 function animate() {
-	player.body.position.x += player.velocity.x;
-	player.body.position.z += player.velocity.z;
-	
+	if (detectCollision == 1 || detectCollision == 2 || detectCollision == 3 || detectCollision == 4){
+		player.velocity.x = 0;
+		player.velocity.z = 0;
+	}
+	else{
+		player.body.position.x += player.velocity.x;
+		player.body.position.z += player.velocity.z;
+	}
+
 	/* display avatar name 
 	
 		if (player.name != null){
@@ -160,6 +176,14 @@ function animate() {
 		
 	//Slight up and down bobbing motion of player
 	//player.body.position.y += Math.sin(time * 5) * 0.05;
+
+	//Camera follows player
+	var playerDirection = new THREE.Vector3(player.velocity.x, 0, player.velocity.z);
+	playerDirection.normalize();
+	const cameraOffset = new THREE.Vector3(0.0, 2.0, 5.0); // NOTE Constant offset between the camera and the target
+	const objectPosition = new THREE.Vector3();
+	player.body.getWorldPosition(objectPosition);
+	camera.position.copy(objectPosition).add(cameraOffset);
 
 	renderer.render( scene, camera );
 }
@@ -197,8 +221,8 @@ function detectCollision(player){
 function createPlayer(){
     var player = {
 		name: "Player1",
-        position: {x: 0, y: 0, z: 0},
-		velocity: {x: 0, y: 0, z: 0},
+        position: new THREE.Vector3(0, 0, 0),
+		velocity: new THREE.Vector3(0, 0, 0),
 		radius: 1,
         color: blue,
         body: createNewBody(1, blue, 0, 0, 0),
@@ -207,6 +231,7 @@ function createPlayer(){
 		kindness: 0,
 		fashion: 0,
 		knowledge: 0,
+		diligence: 0,
     }
 	player.body.castShadow = true;
 	player.body.receiveShadow = true;
@@ -279,8 +304,18 @@ function createFloor(){
 	return plane;
 }
 
-function createWall(x, y, z){
-	const geometry = new THREE.BoxGeometry(1, 2, 10);
+function createRoom(){
+	const wall1 = createWall(5, 0, 0, 1, 10, 10);
+	const wall2 = createWall(-5, 0, 0, 1, 10, 10);
+	const wall3 = createWall(-2, 0, -5, 5, 10, 1);
+	scene.add(wall1);
+	scene.add(wall2);
+	scene.add(wall3);
+	
+}
+
+function createWall(x, y, z, w, h, l){
+	const geometry = new THREE.BoxGeometry(w, h, l);
 	const material = new THREE.MeshBasicMaterial( { color: red } );
 	const cube = new THREE.Mesh( geometry, material );
 
@@ -292,15 +327,22 @@ function createWall(x, y, z){
 	
 }
 
-function createItem(x, y, z){
+function createItem(x, y, z, color){
 	const geometry = new THREE.BoxGeometry(0.5, 0.5, 0.5);
-	const material = new THREE.MeshBasicMaterial( { color: green } );
-	const cube = new THREE.Mesh( geometry, material );
+	const material = new THREE.MeshBasicMaterial( { color: color } );
+	const item = new THREE.Mesh( geometry, material );
 
-	cube.position.x = x;
-	cube.position.y = y;
-	cube.position.z = z;
+	item.position.x = x;
+	item.position.y = y;
+	item.position.z = z;
 
-	return cube;
+	return item;
+	
+}
+
+function createSeeds(x, y, z){
+	const seeds = createItem(x, y, z, green);
+
+	return seeds;
 	
 }
