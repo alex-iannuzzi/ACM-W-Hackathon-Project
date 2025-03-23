@@ -25,5 +25,6 @@ button {
 /* button hover UI */
 button:hover{
     transform: scale(1.075);
+    background-color: #B0C4DE;
 
 }
