@@ -2,6 +2,7 @@
 //Basic code for creating scene
 import * as THREE from 'three';
 import { time, velocity } from 'three/tsl';
+
 //to create font for username 
 import { TextGeometry } from 'three/addons/geometries/TextGeometry.js';
 import { FontLoader } from 'three/addons/loaders/FontLoader.js';
