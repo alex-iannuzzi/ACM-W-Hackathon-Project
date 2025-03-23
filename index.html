@@ -48,16 +48,18 @@
 		<script type="module" src="/main.js"></script>
 		<h1>Design Your Avatar</h1>
       
-		<!-- Username Handle -->
      <div class="username">
  		<input type="text" id = "username" placeholder="Enter username here :3" />
-		 <button onclick="enterBox()">Enter</button>
+		 <button onclick ="enterBox()">Enter</button>
+		 
+
 
 		 <p id="IO_Username"></p>
+
 		 </div>
 
 
-		 
+
  		<h2>Choose A Color</h2>
         </div>
 
@@ -85,18 +87,14 @@
 		
 
 			// <!-- displays the buttons username input -->
-			function enterBox(){
-				displayUsername();
-				if (displayUsername !== null){
-					player.username = displayUsername;
-				}
-			}
-			function displayUsername(){
-				const username = document.getElementById('username').value;
-      if (username.trim() !== "") {
-        document.getElementById('IO_Username').textContent = `Hello, ${username}!`;
-			}
-		}
+			function enterBox() {
+          const username = document.getElementById('username').value.trim();
+            if (username !== "") {
+                document.getElementById('IO_Username').textContent = `Hello, ${username}!`;
+                setPlayerName(username);
+            }
+        }
+	
 	
 		</script>
 		</body>

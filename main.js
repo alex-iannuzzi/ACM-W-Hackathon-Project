@@ -2,6 +2,12 @@
 //Basic code for creating scene
 import * as THREE from 'three';
 import { time, velocity } from 'three/tsl';
+//to create font for username 
+import { TextGeometry } from 'three/addons/geometries/TextGeometry.js';
+import { FontLoader } from 'three/addons/loaders/FontLoader.js';
+
+let avatarName; 
+let font;
 
 const scene = new THREE.Scene();
 const camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 0.1, 1000 );
@@ -35,6 +41,7 @@ scene.add( new THREE.AmbientLight( 0x404040 ) ); // soft white light
 //Adding Player
 var player = createPlayer();
 scene.add(player.body);
+
 
 //Adding walls
 const wall1 = createWall(5, 0, 0);
@@ -110,11 +117,23 @@ document.addEventListener('keyup', function(event) {
 
 //FUNCTION DEFINITIONS
 
+
+
 //Function to animate the scene
 function animate() {
 	player.body.position.x += player.velocity.x;
 	player.body.position.z += player.velocity.z;
 	
+	// display avatar name 
+	
+		if (avatarName) {
+			avatarName.position.set(
+				player.body.position.x, 
+				player.body.position.y + 2,  
+				player.body.position.z
+			);
+		}
+		
 	//Slight up and down bobbing motion of player
 	//player.body.position.y += Math.sin(time * 5) * 0.05;
 
@@ -163,6 +182,7 @@ function createPlayer(){
     return player;
 }
 
+
 function createNewBody(radius, color, x, y, z){
     const geometry = new THREE.SphereGeometry(radius, 32, 32);
     const material = new THREE.MeshStandardMaterial( { color: color } );
@@ -171,6 +191,35 @@ function createNewBody(radius, color, x, y, z){
     sphere.position.set(x, y, z);
     return sphere;
 }
+
+//trying to set the player name to be the input name from html
+function setPlayerName(name) {
+	if (avatarName) {
+		
+	enterBox();
+	const geometry = new TextGeometry(name, {
+		font: font,
+		size: 0.1,
+		height: 0.01
+	});
+	geometry.center();
+	}
+	const material = new THREE.MeshBasicMaterial({ color: 0x000000 });
+	avatarName = new THREE.Mesh(geometry, material);
+
+	scene.add(avatarName);
+}
+
+const loader = new FontLoader();
+loader.load('https://threejs.org/examples/fonts/helvetiker_regular.typeface.json', function (loadedFont) {
+	font = loadedFont;
+	setPlayerName(player.name)
+});
+
+
+
+
+
 
 function updateDiscretePlayerPosition(x, y, z){
 	player.position.x = x;
@@ -192,6 +241,7 @@ function editPlayerColors(player, color){
     player.color = color;
 	player.body.material.color = color;
 }
+
 
 function createFloor(){
 	const geometry = new THREE.PlaneGeometry(100, 100);
