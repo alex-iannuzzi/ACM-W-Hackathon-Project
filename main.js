@@ -7,8 +7,11 @@ import { time, velocity } from 'three/tsl';
 import { TextGeometry } from 'three/addons/geometries/TextGeometry.js';
 import { FontLoader } from 'three/addons/loaders/FontLoader.js';
 
-let avatarName; 
-let font;
+const loader = new FontLoader();
+
+//Detecting start and pause of game
+var start = false;
+var pause = false;
 
 const scene = new THREE.Scene();
 const camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 0.1, 1000 );
@@ -34,7 +37,8 @@ scene.add(floor);
 
 //Adding light to the scene
 const sunlight = new THREE.DirectionalLight( 0xffffff, 1 );
-sunlight.position.set( 5, 5, 5 ).normalize();
+sunlight.position.set( 0, 2, 1 );
+sunlight.castShadow = true;
 scene.add( sunlight );
 
 scene.add( new THREE.AmbientLight( 0x404040 ) ); // soft white light
@@ -55,34 +59,29 @@ camera.position.y = 2;
 //Animation loop
 renderer.setAnimationLoop( animate );
 
-
 //EVENT LISTENERS - reactions to keypresses, interactions with HTML elements, etc.
 //Increase player speed in given direction when a key is pressed (W,A,S,D movement controls)
 //TODO: Add collision detection, compare speed to total speed, not each direction
 document.addEventListener('keypress', function(event) {
 	switch(event.key) {
 		case "w":
-			detectCollision(player);
-			if (player.velocity.z < player.speed && player.velocity.z > -player.speed) {
+			if (getCurrVelocity(player) < player.speed && getCurrVelocity(player) > -player.speed && detectCollision(player) != 1) {
 				player.velocity.z -= 0.1;
 			}
 			break;
 		case "s":
-			detectCollision(player);
-			if (player.velocity.z < player.speed && player.velocity.z > -player.speed) {
+			if (getCurrVelocity(player) < player.speed && getCurrVelocity(player) > -player.speed && detectCollision(player) != 2) {
 				player.velocity.z += 0.1;
 			}
 			player.velocity.z += 0.1;
 			break;
 		case "a":
-			detectCollision(player);
-			if (player.velocity.x < player.speed && player.velocity.x > -player.speed) {
+			if (getCurrVelocity(player) < player.speed && getCurrVelocity(player) > -player.speed && detectCollision(player) != 3) {
 				player.velocity.x -= 0.1;
 			}
 			break;
 		case "d":
-			detectCollision(player);
-			if (player.velocity.x < player.speed && player.velocity.x > -player.speed) {
+			if (getCurrVelocity(player) < player.speed && getCurrVelocity(player) > -player.speed && detectCollision(player) != 4) {
 				player.velocity.x += 0.1;
 			}
 			break;
@@ -124,6 +123,23 @@ document.getElementById("colorPicker").addEventListener("input", function(event)
 //Change player username when entered into HTML element "username"
 document.getElementById("username").addEventListener("input", function(event) {
 	player.name = event.target.value;;
+	displayPlayerName(player.name);
+});
+
+//Start the game when start button is pressed
+document.getElementById("start-button").addEventListener("click", function(event) {
+	start = true;
+});
+
+//Pause the game when pause button is pressed
+document.getElementById("pause-button").addEventListener("click", function(event) {
+	pause = true;
+});
+
+//Restart the game when restart button is pressed
+document.getElementById("restart-button").addEventListener("click", function(event) {
+	
+	start = false;
 });
 
 //FUNCTION DEFINITIONS
@@ -135,15 +151,12 @@ function animate() {
 	player.body.position.x += player.velocity.x;
 	player.body.position.z += player.velocity.z;
 	
-	// display avatar name 
+	/* display avatar name 
 	
-		if (avatarName) {
-			avatarName.position.set(
-				player.body.position.x, 
-				player.body.position.y + 2,  
-				player.body.position.z
-			);
+		if (player.name != null){
+			displayPlayerName(player.name);
 		}
+		*/
 		
 	//Slight up and down bobbing motion of player
 	//player.body.position.y += Math.sin(time * 5) * 0.05;
@@ -156,17 +169,25 @@ function animate() {
 function detectCollision(player){
 	scene.children.forEach(function(object){
 		if (object != player.body){
-			//Detect collisions left and right, stop player from moving
-			if (player.body.position.x + player.radius > object.position.x - object.scale.x/2 &&
-			player.body.position.x - player.radius < object.position.x + object.scale.x/2) {
+			//Detect collisions right
+			if (player.body.position.x + player.radius > object.position.x - object.scale.x/2) {
 				//Collision detected, stop player movement
-				player.velocity.x = 0;
-			
+				return 4;
 			}
-			//Detect collisions up and down, stop player from moving
-			if (player.body.position.z + player.radius > object.position.z - object.scale.z/2 &&
-			player.body.position.z - player.radius < object.position.z + object.scale.z/2) {
-				player.velocity.z = 0;
+			//Detect collisions left
+			if (player.body.position.x - player.radius < object.position.x + object.scale.x/2) {
+				//Collision detected, stop player movement
+				return 3;
+			}
+			//Detect collisions front
+			if (player.body.position.z - player.radius < object.position.z + object.scale.z/2) {
+				//Collision detected, stop player movement
+				return 1;
+			}	
+			//Detect collisions back
+			if (player.body.position.z + player.radius > object.position.z - object.scale.z/2) {
+				//Collision detected, stop player movement
+				return 2;
 			}
 		}
 	});
@@ -194,7 +215,7 @@ function createPlayer(){
     return player;
 }
 
-
+//Create a new NPC body (sphere)
 function createNewBody(radius, color, x, y, z){
     const geometry = new THREE.SphereGeometry(radius, 32, 32);
     const material = new THREE.MeshStandardMaterial( { color: color } );
@@ -204,34 +225,24 @@ function createNewBody(radius, color, x, y, z){
     return sphere;
 }
 
-//trying to set the player name to be the input name from html
-function setPlayerName(name) {
-	if (avatarName) {
-		
-	enterBox();
-	const geometry = new TextGeometry(name, {
-		font: font,
-		size: 0.1,
-		height: 0.01
+/*
+function displayPlayerName(name) {
+	loader.load('fonts/helvetiker_regular.typeface.json', function (font) {
+		const geometry = new TextGeometry(name, {
+			font: font,
+			size: 0.2,
+			height: 0.01,
+		});
+
 	});
-	geometry.center();
-	}
-	const material = new THREE.MeshBasicMaterial({ color: 0x000000 });
-	avatarName = new THREE.Mesh(geometry, material);
 
-	scene.add(avatarName);
+	
 }
-
-const loader = new FontLoader();
-loader.load('https://threejs.org/examples/fonts/helvetiker_regular.typeface.json', function (loadedFont) {
-	font = loadedFont;
-	setPlayerName(player.name)
-});
-
-
-
-
-
+*/
+//Calculate the current total velocity of an object
+function getCurrVelocity(obj){
+	return Math.sqrt(obj.velocity.x * obj.velocity.x + obj.velocity.z * obj.velocity.z);
+}
 
 function updateDiscretePlayerPosition(x, y, z){
 	player.position.x = x;
@@ -257,12 +268,14 @@ function editPlayerColors(player, color){
 
 function createFloor(){
 	const geometry = new THREE.PlaneGeometry(100, 100);
-	const material = new THREE.MeshBasicMaterial( { color: white } );
+	const material = new THREE.MeshStandardMaterial( { color: white } );
 	const plane = new THREE.Mesh( geometry, material );
 
 	plane.rotation.x = -Math.PI / 2;
 	plane.position.x = 0;
 	plane.position.y = -1;
+
+	plane.receiveShadow = true;
 	return plane;
 }
 
