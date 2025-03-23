@@ -48,18 +48,9 @@
 		<script type="module" src="/main.js"></script>
 		<h1>Design Your Avatar</h1>
       
-     <div class="username">
+		<!-- Username Handle -->
+        <div class="username">
  		<input type="text" id = "username" placeholder="Enter username here :3" />
-		 <button onclick ="enterBox()">Enter</button>
-		 
-
-
-		 <p id="IO_Username"></p>
-
-		 </div>
-
-
-
  		<h2>Choose A Color</h2>
         </div>
 
@@ -67,13 +58,14 @@
 		 <div class="menu-container">
 			<button class="menu-button">☰</button>
 			<div class="dropdown-menu">
-				<button id="start-button">START</button>
-				<button id="pause-button">PAUSE</button>
-				<button id="resume-button">RESUME</button>
-				<button id="restart-button">RESTART</button>
+				<button onclick="Start()">START</button>
+				<button onclick="Pause()">PAUSE</button>
+				<button onclick="Resume()">RESUME</button>
+				<button onclick="Restart()">RESTART</button>
 			</div>
 		</div>
-
+		<!-- Design Avatar -->
+		<div id="createPlayer"></div>
 		<div class="design-avatar">
 			<input type="color" id = "colorPicker">
 			<button type="button" onclick="editPlayerColors()">Select A Color</button>
@@ -83,19 +75,26 @@
  				const username = document.getElementById('username').value;
  				const color = document.getElementById('colorPicker').value;
  				alert(`username: ${username}, Color: ${color}`);
-
  			}
-		
-
-			// <!-- displays the buttons username input -->
-			function enterBox() {
-          const username = document.getElementById('username').value.trim();
-            if (username !== "") {
-                document.getElementById('IO_Username').textContent = `Hello, ${username}!`;
-                setPlayerName(username);
-            }
-        }
-	
+	// Color change function
+			function editPlayerColors() {
+				const  selectedColor = document.getElementById('colorPicker').value;
+				document.getElementById('createPlayer').style.backgroundColor  = selectedColor;
+			}
+					// <!-- displays the buttons username input -->
+			function enterBox(){
+				displayUsername();
+				if (displayUsername !== null){
+					player.username = displayUsername;
+				}
+			}
+			
+			function displayUsername(){
+				const username = document.getElementById('username').value;
+      if (username.trim() !== "") {
+        document.getElementById('IO_Username').textContent = `Hello, ${username}!`;
+			}
+		}
 	
 		</script>
 		</body>
