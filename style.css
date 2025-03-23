@@ -1,3 +1,4 @@
+/* Font */
 h1 {
     color: palevioletred;
     font-family: Georgia;
@@ -8,7 +9,7 @@ h2 {
     font-family: Georgia;
     text-align: center;
 }
-
+/* user interface */
 button {
     background-color:#BC8F;
     font-size: 16px;
@@ -18,5 +19,11 @@ button {
     border-radius: 13px;
     font-family: Georgia;
     text-align: center;
-    
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;  
+}
+/* button hover UI */
+button:hover{
+    transform: scale(1.075);
+
 }

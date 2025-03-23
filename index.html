@@ -80,19 +80,25 @@
 			function editPlayerColors() {
 				const  selectedColor = document.getElementById('colorPicker').value;
 				document.getElementById('createPlayer').style.backgroundColor  = selectedColor;
+				alert(`Color changed to: ${selectedColor}`);
 			}
+			// store player info
+			const player= {
+				username: "" ,
+			};
 					// <!-- displays the buttons username input -->
 			function enterBox(){
 				displayUsername();
-				if (displayUsername !== null){
-					player.username = displayUsername;
+				if (username){
+					player.username = username;
 				}
 			}
 			
 			function displayUsername(){
-				const username = document.getElementById('username').value;
-      if (username.trim() !== "") {
-        document.getElementById('IO_Username').textContent = `Hello, ${username}!`;
+				const username = document.getElementById('username').value.trim();
+      			if (username !== "") {
+        			document.getElementById('IO_Username').textContent = `Hello, ${username}!`;
+					return username;
 			}
 		}
 	
