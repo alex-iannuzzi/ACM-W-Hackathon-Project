@@ -28,7 +28,7 @@ button:hover{
     background-color: #B0C4DE;
 
 }
-username {
+floating-username {
     text-align: center;
     position: absolute;
     top: -25px;
@@ -36,15 +36,9 @@ username {
     transform: translateX(-50%);
     color: #9370DB;
 }
-createPlayer {
-    width: 100px;
-    height: 100px;
-    background-color: #FFFFFF;
-    border-radius: 50%;
-    margin: 20px auto;
-}		
-design-avatar {
-    position: relative;
+avatar-container {
+    position: relative; /* Needed for absolute positioning */
     display: inline-block;
     text-align: center;
+    margin: 20px auto;
 }
