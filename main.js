@@ -224,7 +224,7 @@ function createPlayer(){
         position: new THREE.Vector3(0, 0, 0),
 		velocity: new THREE.Vector3(0, 0, 0),
 		radius: 1,
-        color: blue,
+        color: #9370DB,
         body: createNewBody(1, blue, 0, 0, 0),
 
         speed: 1,
@@ -316,7 +316,7 @@ function createRoom(){
 
 function createWall(x, y, z, w, h, l){
 	const geometry = new THREE.BoxGeometry(w, h, l);
-	const material = new THREE.MeshBasicMaterial( { color: red } );
+	const material = new THREE.MeshBasicMaterial( { color: #CD5C5C } );
 	const cube = new THREE.Mesh( geometry, material );
 
 	cube.position.x = x;
