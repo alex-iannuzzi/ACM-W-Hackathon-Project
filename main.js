@@ -21,8 +21,8 @@ renderer.setSize( window.innerWidth, window.innerHeight );
 document.body.appendChild( renderer.domElement );
 
 //Basic color Definitions
-const #9370DB = new THREE.Color().setRGB(0, 0, 1);
-const #CD5C5C = new THREE.Color().setRGB(1, 0, 0);
+const blue = new THREE.Color().setRGB(0, 0, 1);
+const red = new THREE.Color().setRGB(1, 0, 0);
 const green = new THREE.Color().setRGB(0, 1, 0);
 const yellow = new THREE.Color().setRGB(1, 1, 0);
 const white = new THREE.Color().setRGB(1, 1, 1);
@@ -224,7 +224,7 @@ function createPlayer(){
         position: new THREE.Vector3(0, 0, 0),
 		velocity: new THREE.Vector3(0, 0, 0),
 		radius: 1,
-        color: #9370DB,
+        color: blue,
         body: createNewBody(1, blue, 0, 0, 0),
 
         speed: 1,
@@ -316,7 +316,7 @@ function createRoom(){
 
 function createWall(x, y, z, w, h, l){
 	const geometry = new THREE.BoxGeometry(w, h, l);
-	const material = new THREE.MeshBasicMaterial( { color: #CD5C5C } );
+	const material = new THREE.MeshBasicMaterial( { color: red } );
 	const cube = new THREE.Mesh( geometry, material );
 
 	cube.position.x = x;
