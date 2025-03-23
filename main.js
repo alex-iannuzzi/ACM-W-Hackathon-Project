@@ -113,6 +113,11 @@ document.getElementById("colorPicker").addEventListener("input", function(event)
 	editPlayerColors(player, new THREE.Color(event.target.value));
 });
 
+//Change player username when entered into HTML element "username"
+document.getElementById("username").addEventListener("input", function(event) {
+	player.name = event.target.value;;
+});
+
 //FUNCTION DEFINITIONS
 
 //Function to animate the scene
